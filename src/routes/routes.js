@@ -1,16 +1,18 @@
 const express = require("express");
 const router = express.Router();
+const {
+  getAllQuestionsHandler,
+  postQuestionHandler,
+  getQuestionByIdHandler,
+  deleteQuestionByIdHandler,
+} = require("../handler/handler");
 
-router.get("/questions", (req, res) => {
-	res.status(200).json({ message: "Questions get"});
-});
+router.get("/questions", getAllQuestionsHandler);
 
-router.post("/questions", (req, res) => {
-	res.status(200).json({message: "Success"});
-});
+router.post("/questions", postQuestionHandler);
 
-router.post("/questions/:id", (req, res) => {
-	res.status(200).json({message: "success"});
-});
+router.get("/questions/:id", getQuestionByIdHandler);
+
+router.delete("/questions/:id", deleteQuestionByIdHandler);
 
 module.exports = router;
