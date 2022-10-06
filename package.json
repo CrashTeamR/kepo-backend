@@ -1,11 +1,11 @@
 {
   "name": "kepo-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is backend app to support kepo application.",
   "main": "app.js",
   "scripts": {
-    "dev": "npx nodemon **/app.js",
-    "start": "node **/app.js"
+    "dev": "npx nodemon index.js",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +15,13 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "mongoose": "^6.6.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crashteamr/kepo-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/crashteamr/kepo-backend/issues"
+  },
+  "homepage": "https://github.com/crashteamr/kepo-backend#readme"
 }
