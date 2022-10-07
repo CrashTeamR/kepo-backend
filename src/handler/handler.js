@@ -8,6 +8,7 @@ const database = mongoose.model(
     username: String,
     title: String,
     question: String,
+    comments: Array,
   },
   "questions"
 );
