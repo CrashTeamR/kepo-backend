@@ -7,8 +7,9 @@ const database = mongoose.model(
   {
     username: String,
     title: String,
-    question: String,
+    content: String,
     comments: Array,
+    createdAt: String,
   },
   "questions"
 );
@@ -17,7 +18,7 @@ const database = mongoose.model(
 async function getAllQuestionsHandler(req, res) {
   try {
     const response = await database.find();
-    res.status(200).json({ message: "success", response });
+    res.status(200).json({ response });
   } catch (error) {
     console.log(error);
   }
@@ -27,9 +28,16 @@ async function getAllQuestionsHandler(req, res) {
 async function postQuestionHandler(req, res) {
   const question = { ...req.body };
 
-  await database.create(question);
+  try {
+    const response = await database.create({
+      ...question,
+      createdAt: Date.now(),
+    });
 
-  res.status(200).json({ message: "Success", question });
+    res.status(200).json({ response });
+  } catch (error) {
+    res.json({ error });
+  }
 }
 
 // Get one question by id
@@ -38,7 +46,7 @@ async function getQuestionByIdHandler(req, res) {
     const id = req.params.id;
     const response = await database.findById(id);
 
-    res.status(200).json({ message: "success", response });
+    res.status(200).json({ response });
   } catch (error) {
     console.log(error);
   }
@@ -46,12 +54,19 @@ async function getQuestionByIdHandler(req, res) {
 
 // Delete question by id
 async function deleteQuestionByIdHandler(req, res) {
-  try {
-    const id = req.params.id;
-    await database.findOneAndRemove(id);
+  const id = req.params.id;
 
-    res.status(200).json({ message: "success delete" });
-  } catch (error) {}
+  try {
+    const response = await database.findByIdAndDelete({ _id: id });
+    console.log(response);
+
+    if (!response) throw Error();
+
+    res.status(200).json({ message: `Delete success` });
+  } catch (error) {
+    console.log(error);
+    return res.json({ error });
+  }
 }
 
 module.exports = {
