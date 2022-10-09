@@ -1,7 +1,9 @@
 const express = require("express");
-const routes = require("./routes/routes.js");
+const routes = require("./src/routes/routes.js");
+const { v4 } = require("uuid");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -15,17 +17,16 @@ try {
   console.log(error);
 }
 
-require("dotenv").config();
-
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.json());
-app.get("/", (req, res) => {
+
+app.get("/api", (req, res) => {
+  res.setHeader("Content-Type", "text/html");
   res.send("helloWorld");
 });
 
 app.use("/api", routes);
 
-app.listen(3000, () => {
-  console.log("server is up");
-});
+module.exports = app;
